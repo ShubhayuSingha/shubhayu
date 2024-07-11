@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Shubhayu's Website</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css"> <!-- add your CSS file here -->
+</head>
+<body bgcolor="black">
+        <header> 
+                <h1 style="font-family:Verdana, Geneva, Tahoma, sans-serif; color: white;" id='typewriter-heading'>SHUBHAYU SINGHA</h1>
+                <h2 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white">This is me! Shubhayu! And this is my simple website!</h2>
+                         
+        </header>
+        <main>
+                <p style="font-size: 24px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white">
+                
+In the realm of web development, I'm akin to a crestfallen warrior in Lordran, stumbling through foggy HTML paths and JavaScript bonfires. Armed with naught but curiosity, I test the waters, unsure if a div holds secrets or a script yields spells. Here, I embrace the journey, line by line.
+
+                <br><br>
+                </p>
+        </main>  
+        <p style="font-size: 18px;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: lightgreen">Follow my socials:</p>
+        <ul>
+                <li>
+                        <a href="https://github.com/ShubhayuSingha" target="_blank" style="font-family:\'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; color:aquamarine; line-height: 2;">
+                                GitHub
+                        </a>
+                </li>
+                <li>
+                        <a href="https://www.linkedin.com/in/shubhayu-singha-88574b274/" target="_blank" style="font-family:\'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; color:aquamarine; line-height: 2;">
+                                LinkedIn
+                        </a>
+                </li>
+                <li>
+                        <a href="https://x.com/shubhayusingha" target="_blank" style="font-family:\'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; color:aquamarine; line-height: 2;">
+                                Twitter/X
+                        </a>
+                </li>  
+                <li>
+                        <a href="https://www.instagram.com/singha2k4/" target="_blank" style="font-family:\'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; color:aquamarine; line-height: 2;">
+                                Instagram
+                        </a>
+                        
+                </li>
+        </ul>
+
+                <ul>
+
+<li style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; line-height: 2; color: white">To engrave your visit: <a href="userinput.html" style="color:lightpink">Click here!</a></li>
+
+<li style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; line-height: 2; color: white">To see previous visitors: <a href="../peoplebefore" style="color:lightpink">Click here!</a></li>
+
+<li style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; line-height: 2; color: white">To buy my laptop: <a href="https://www.amazon.in/Acer-i5-13420H-Graphics-Display-ANV15-51/dp/B0CHJJZ9G8/ref=sr_1_1_sspa?sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1" style="color:lightpink" target="_blank">Click here!</a></li>
+
+<li style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; line-height: 2; color: white">For Emotional Quotes: <a href="motivation.html" style="color:lightpink">Click here!</a></li>
+
+<li style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; line-height: 2; color: white">To Donate: <a href="donation.html" style="color:lightpink">Click here!</a></li>
+
+                </ul>
+
+
+
+                
+                <script>                        
+                        let index = 0;
+                        const speed = 50; // Typing speed in milliseconds
+                        let  text = ''
+                
+                        function typeWriter() {
+                            if (index < text.length) {
+                                document.getElementById('typewriter-heading').innerHTML += text.charAt(index);
+                                index++;
+                                setTimeout(typeWriter, speed);
+                            }
+                        }
+                
+                        // Start the typewriter effect when the page loads
+                        function startTypewriter(newText) {
+                                text = newText;
+                                index = 0;
+                                document.getElementById('typewriter-heading').innerHTML = ''; // Clear previous text
+                                typeWriter();
+                        }
+                        window.onload = function() {
+                        const initialText = document.getElementById('typewriter-heading').textContent;
+                        startTypewriter(initialText);
+                        };
+                </script>
+              
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Shubhayu's Website</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css"> <!-- add your CSS file here -->
+</head>
+<body bgcolor="black">
+    <p style="font-size: 24px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white">To go back to homepage: <a href="index.html" style="color:lightpink">Click here!</a></p>
+
+        <header> 
+                <h1 style="font-family:Verdana, Geneva, Tahoma, sans-serif; color: white;" id='typewriter-heading'>Donate here</h1>               
+                         
+        </header>  
+                <p style="font-size: 24px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white">                
+Spend money at your own discretion. Nothing is forced. This is not a business. This is my own personal project and experiment.             
+                </p>
+                <ul style="line-height: 2;">
+                    <li><a href="policies/privacy.html" style="color: lightgreen; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Privacy Policy</a></li>
+                    <li><a href="policies/terms.html" style="color: lightgreen; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Terms and Conditions</a></li>
+                    <li><a href="policies/refund.html" style="color: lightgreen; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Cancellation and Refund</a></li>
+                    <li><a href="policies/delivery.html" style="color: lightgreen; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Shipping and Delivery</a></li>
+                    <li><a href="policies/contact.html" style="color: lightgreen; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contact Us</a></li>
+                </ul>
+        
+
+    
+                                
+                <script>                        
+                        let index = 0;
+                        const speed = 50; // Typing speed in milliseconds
+                        let  text = ''
+                
+                        function typeWriter() {
+                            if (index < text.length) {
+                                document.getElementById('typewriter-heading').innerHTML += text.charAt(index);
+                                index++;
+                                setTimeout(typeWriter, speed);
+                            }
+                        }
+                
+                        // Start the typewriter effect when the page loads
+                        function startTypewriter(newText) {
+                                text = newText;
+                                index = 0;
+                                document.getElementById('typewriter-heading').innerHTML = ''; // Clear previous text
+                                typeWriter();
+                        }
+                        window.onload = function() {
+                        const initialText = document.getElementById('typewriter-heading').textContent;
+                        startTypewriter(initialText);
+                        };
+                </script>
+              
+</body>
+</html>
