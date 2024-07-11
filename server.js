@@ -14,18 +14,21 @@ mongoose.connect('mongodb+srv://shubhayusingha:12345@shubhayu-cluster.55wzbvg.mo
 const namesSchema = {
     name: String,
     time: {
-        type: String,
+        type: Date,
         default: function() {
             const now = new Date();
             // IST is UTC+5:30, so we add 5 hours and 30 minutes to the current UTC time
             const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-            const istTime = new Date(now.getTime() + istOffset);
-            return istTime.toLocaleDateString('en-IN') + ' - ' + istTime.toLocaleTimeString('en-IN', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
+            return new Date(now.getTime()+istOffset);
+            
+        }
+    },
+    displayTime: {
+        type: String,
+        default: function() {
+            const now = new Date();
+            const formattedTime = `${now.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} - ${now.toLocaleDateString('en-IN', { weekday: 'short' })} - ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}`;
+
         }
     }
 }
@@ -53,23 +56,23 @@ app.post('/form',async(req,res)=>{
     const name = req.body.name;
 
     const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+    
     const now = new Date();
+    
     const istTime = new Date(now.getTime() + istOffset);
+    
+    const formattedTime = `${now.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} - ${now.toLocaleDateString('en-IN', { weekday: 'short' })} - ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}`;
 
     const newName = new nameModel({
         name: name,
-        time: istTime.toLocaleDateString('en-IN') + ' - ' + istTime.toLocaleTimeString('en-IN', {
-            hour12: true,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        })
+        time: istTime,
+        displayTime: formattedTime
     });
 
 
     try{
         await newName.save();
-        res.redirect('/');
+        res.redirect('/peoplebefore');
     } catch(err){
         res.status(500).send(err.message);
     }

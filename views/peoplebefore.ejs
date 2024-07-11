@@ -11,9 +11,9 @@
     
     <h1>Previous Visitors: <br></h1>
        
-    <% namesList.forEach(name =>{ %>
-        <p><%= name.name %></p><p><%= name.time %><br></p>
-
+    <% namesList.forEach(name =>{ %>        
+        <li style="color: yellow"><%= name.name %></li>
+        <li style="color:aqua"><%= name.displayTime %></li><br>        
     <% }) %>
     
 </body>
