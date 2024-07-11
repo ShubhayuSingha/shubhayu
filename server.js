@@ -16,16 +16,20 @@ const namesSchema = {
     time: {
         type: String,
         default: function() {
-            return new Date().toLocaleDateString()+' - '+ new Date().toLocaleTimeString('en-IN',{
-            hour12: true,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'           
+            const now = new Date();
+            // IST is UTC+5:30, so we add 5 hours and 30 minutes to the current UTC time
+            const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+            const istTime = new Date(now.getTime() + istOffset);
+            return istTime.toLocaleDateString('en-IN') + ' - ' + istTime.toLocaleTimeString('en-IN', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
             });
-    
         }
     }
 }
+
 
 const nameModel = mongoose.model('Names',namesSchema);
 
@@ -47,15 +51,21 @@ app.get('/form',(req,res)=>{
 
 app.post('/form',async(req,res)=>{
     const name = req.body.name;
+
+    const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+    const now = new Date();
+    const istTime = new Date(now.getTime() + istOffset);
+
     const newName = new nameModel({
         name: name,
-        time: new Date().toLocaleDateString()+' - '+ new Date().toLocaleTimeString('en-IN',{
+        time: istTime.toLocaleDateString('en-IN') + ' - ' + istTime.toLocaleTimeString('en-IN', {
             hour12: true,
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit', 
+            second: '2-digit'
         })
     });
+
 
     try{
         await newName.save();
