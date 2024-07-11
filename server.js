@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
+const moment = require('moment-timezone');
 
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -15,20 +16,16 @@ const namesSchema = {
     name: String,
     time: {
         type: Date,
-        default: function() {
-            const now = new Date();
-            // IST is UTC+5:30, so we add 5 hours and 30 minutes to the current UTC time
-            const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-            return new Date(now.getTime()+istOffset);
+        default: function() {            
+            return moment().toDate();
             
         }
     },
     displayTime: {
         type: String,
         default: function() {
-            const now = new Date();
-            const formattedTime = `${now.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} - ${now.toLocaleDateString('en-IN', { weekday: 'short' })} - ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}`;
-
+            const istTime = moment.tz('Asia/Kolkata');
+            return istTime.format('DD MMM YYYY - ddd - hh:mm:ss A')
         }
     }
 }
@@ -54,14 +51,8 @@ app.get('/form',(req,res)=>{
 
 app.post('/form',async(req,res)=>{
     const name = req.body.name;
-
-    const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-    
-    const now = new Date();
-    
-    const istTime = new Date(now.getTime() + istOffset);
-    
-    const formattedTime = `${now.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} - ${now.toLocaleDateString('en-IN', { weekday: 'short' })} - ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}`;
+    const istTime = moment.tz('Asia/Kolkata');   
+    const formattedTime = istTime.format('DD MMM YYYY - ddd - hh:mm:ss A');  
 
     const newName = new nameModel({
         name: name,
