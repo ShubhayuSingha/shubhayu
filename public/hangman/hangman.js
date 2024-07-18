@@ -32,6 +32,7 @@ function initializeGame() {
     // Clear and regenerate letter buttons
     letterButtonsContainer.innerHTML = '';
     generateLetterButtons();
+    hideEndGameButtons();
 
     // Enable all letter buttons
     letterButtonsContainer.querySelectorAll('button').forEach(button => {
@@ -46,7 +47,7 @@ function initializeGame() {
 
     wordDisplay.textContent = displayWord.join(' ');
     livesDisplay.textContent = "Lives: " + lives;
-    feedback.textContent = '';
+    feedback.textContent = 'Let us start the game.';
     guessedLettersContainer.textContent = '';
 
     
@@ -152,6 +153,9 @@ function generateLetterButtons() {
 // Function to show end game buttons
 function showEndGameButtons() {
     newGameContainer.style.display = 'flex';
+}
+function hideEndGameButtons(){
+    newGameContainer.style.display = 'none'
 }
 
 // Event listener for new game button

@@ -31,12 +31,16 @@ body{
     color: yellow;
 }
 
-#update-container{
+#update-container{    
+    display: flex;  
+    justify-content: center; 
     text-align: center;
+    align-items: center; 
     background-color: rgb(94, 69, 7);
     border: 1px solid #ccc;
     padding: 10px;
-    width: 200px; /* Same width as hangman-container for alignment */
+    width: 200px; 
+    height: 70px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     margin-top: 30px;  
