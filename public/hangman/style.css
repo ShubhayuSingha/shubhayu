@@ -1,0 +1,85 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+    height: 100vh;      
+    background-color: black;
+    color: white; 
+   
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; /* Adjust the gap between containers */
+}
+
+#hangman-container{    
+    font-size: 24px;
+    background-color: darkred;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0, 0.1);
+    text-align: center;
+    width: 270px; 
+    margin-top: 10px;
+    margin-bottom: 30px;   
+}
+
+#lives-display{
+    color: yellow;
+}
+
+#update-container{
+    text-align: left;
+    background-color: rgb(94, 69, 7);
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 200px; /* Same width as hangman-container for alignment */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-top: 100px;  
+}
+
+#feedback-container{
+    font-weight: bold;
+    color: rgb(14, 216, 243);
+}
+
+#guess-container{    
+    background-color: rgb(10, 10, 73);
+    padding: 30px;
+    border-radius: 30px;
+    font-size: 24px;      
+}
+
+#word-container{
+    margin-bottom: 20px;    
+    font-size: 30px;
+}
+
+#guess-container input[type="text"]{
+    padding: 8px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+#guess-container button{
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: lightpink;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    
+}
+
+#guessed-letters{
+    display: flex;
+    font-size: 20px;
+    color: rgb(255, 82, 226);
+}
+
