@@ -7,123 +7,151 @@ const words = [
 
 let lives = 10;
 let usedWords = []; // Array to store all used words
+let selectedWord = ''; // Store the selected word globally
 
 // Function to select a random word, excluding words that have been used in the last game
 function selectRandomWord() {
-    // Filter out words that have been used in the last game
     let availableWords = words.filter(word => !usedWords.includes(word));
 
-    // If all words have been used, reset usedWords to empty array
     if (availableWords.length === 0) {
         usedWords = [];
         availableWords = words.slice(); // Reset to include all words
     }
 
-    // Select a random word from availableWords
     let randomIndex = Math.floor(Math.random() * availableWords.length);
     let selectedWord = availableWords[randomIndex];
 
-    // Add selected word to usedWords
     usedWords.push(selectedWord);
 
-    // Return selected word in uppercase
     return selectedWord.toUpperCase();
 }
 
-let selectedWord = selectRandomWord();
+// Initialize the game state
+function initializeGame() {
+    // Clear and regenerate letter buttons
+    letterButtonsContainer.innerHTML = '';
+    generateLetterButtons();
+
+    // Enable all letter buttons
+    letterButtonsContainer.querySelectorAll('button').forEach(button => {
+        button.disabled = false; // Ensure all buttons are enabled
+    });
+    
+    selectedWord = selectRandomWord();
+    guessedLetters = [];
+    incorrectLetters = [];
+    lives = 10;
+    displayWord = selectedWord.split('').map(letter => '_');
+
+    wordDisplay.textContent = displayWord.join(' ');
+    livesDisplay.textContent = "Lives: " + lives;
+    feedback.textContent = '';
+    guessedLettersContainer.textContent = '';
+
+    
+
+    // Hide new game buttons container
+    newGameContainer.style.display = 'none';
+}
 
 // Array to store guessed letters
 let guessedLetters = [];
 let incorrectLetters = [];
 
 // Display dashes for each letter in the word
-let displayWord = selectedWord.split('').map(letter => '_');
+let displayWord = selectRandomWord().split('').map(letter => '_');
 
 // DOM elements
 const wordDisplay = document.getElementById('word-display');
-const guessInput = document.getElementById('guess');
-const guessButton = document.getElementById('guess-button');
+const letterButtonsContainer = document.getElementById('letter-buttons'); // Container for letter buttons
 const feedback = document.getElementById('feedback');
 const guessedLettersContainer = document.getElementById('guessed-letters');
 const livesDisplay = document.getElementById('lives-display');
+const newGameContainer = document.getElementById('new-game-container'); // Container for new game buttons
+const newGameButton = document.getElementById('new-game-button'); // New game button
+const homeButton = document.getElementById('home-button'); // Home button
 
 // Display initial word state
 wordDisplay.textContent = displayWord.join(' ');
-livesDisplay.textContent = "Lives: "+lives;
+livesDisplay.textContent = "Lives: " + lives;
 
-// Function to update word display
 function updateWordDisplay() {
-    wordDisplay.textContent = displayWord.join(' ');    
-    incorrectLetters.sort();
-    guessedLettersContainer.textContent = incorrectLetters.join(' ');
+    wordDisplay.textContent = displayWord.join(' ');
 }
 
-function reduceLife(){
+function reduceLife() {
     lives--;
-    livesDisplay.textContent = "Lives: "+lives;    
+    livesDisplay.textContent = "Lives: " + lives;
 }
-function sameLife(){
-    livesDisplay.textContent = "Lives: "+lives;
+
+function sameLife() {
+    livesDisplay.textContent = "Lives: " + lives;
 }
 
 // Function to handle a guess
-function handleGuess() {
-    let guess = guessInput.value.toUpperCase();
-    guessInput.value = '';
-    if (lives>1){
-    // Check if the guessed letter is valid and hasn't been guessed already
-        if (guess.match(/[A-Z]/) && guessedLetters.indexOf(guess) === -1) {
-            guessedLetters.push(guess);
+function handleGuess(letter, button) {
+    letter = letter.toUpperCase();
+    if (lives > 1) {
+        if (guessedLetters.indexOf(letter) === -1) {
+            guessedLetters.push(letter);
 
-            // Check if the guessed letter is in the word
-            if (selectedWord.includes(guess)) {
-                // Update displayWord with the guessed letter(s)
+            // Disable the button
+            button.disabled = true;
+
+            if (selectedWord.includes(letter)) {
                 for (let i = 0; i < selectedWord.length; i++) {
-                    if (selectedWord[i] === guess) {
-                        displayWord[i] = guess;
+                    if (selectedWord[i] === letter) {
+                        displayWord[i] = letter;
                     }
                 }
-                feedback.textContent = 'Keep going!'
+                feedback.textContent = 'Keep going!';
                 updateWordDisplay();
                 sameLife();
 
-                // Check if the word has been completely guessed
                 if (!displayWord.includes('_')) {
                     feedback.textContent = 'Congratulations! You guessed the word!';
-                    guessButton.textContent = 'NEW GAME';
-                    guessButton.onclick = function(){
-                        location.reload();
-                    }
+                    showEndGameButtons();
                 }
             } else {
-                // Incorrect guess
                 feedback.textContent = 'Wrong guess.';
-                incorrectLetters.push(guess);
+                incorrectLetters.push(letter);
                 updateWordDisplay();
-                reduceLife();              
+                reduceLife();
             }
         } else {
-            // Invalid guess (non-alphabetical or already guessed)
             feedback.textContent = 'Repeating letters.';
             updateWordDisplay();
             sameLife();
         }
-    } else{
-        livesDisplay.textContent = "Lives: "+0;
-        feedback.textContent = 'Unlucky... You lost the game. The word was: \n'+selectedWord;        
-        guessButton.textContent = 'NEW GAME';
-        guessButton.onclick = function(){
-            location.reload();
-        }
+    } else {
+        livesDisplay.textContent = "Lives: " + 0;
+        feedback.textContent = 'Unlucky... You lost the game. The word was: ' + selectedWord;
+        showEndGameButtons();
     }
 }
 
-// Event listener for guess button click
-guessButton.addEventListener('click', handleGuess);
+// Generate letter buttons
+function generateLetterButtons() {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    letters.split('').forEach(letter => {
+        const button = document.createElement('button');
+        button.textContent = letter;
+        button.onclick = () => handleGuess(letter, button);
+        letterButtonsContainer.appendChild(button);
+    });
+}
 
-// Event listener for Enter key press in guess input
-guessInput.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        handleGuess();
-    }
-});
+// Function to show end game buttons
+function showEndGameButtons() {
+    newGameContainer.style.display = 'flex';
+}
+
+// Event listener for new game button
+newGameButton.addEventListener('click', initializeGame);
+
+// Event listener for home button
+homeButton.addEventListener('click', () => window.location.href = '/'); // Replace '/' with the URL of your homepage
+
+// Initialize the game
+
+initializeGame();
