@@ -5,6 +5,7 @@ const words = [
     'aesthetic', 'joker', 'foolish', 'chicken', 'mythology'
 ];
 
+
 let lives = 10;
 let usedWords = []; // Array to store all used words
 let selectedWord = ''; // Store the selected word globally
@@ -91,7 +92,7 @@ function sameLife() {
 // Function to handle a guess
 function handleGuess(letter, button) {
     letter = letter.toUpperCase();
-    if (lives > 1) {
+    if (lives >= 0) {
         if (guessedLetters.indexOf(letter) === -1) {
             guessedLetters.push(letter);
 
@@ -110,6 +111,7 @@ function handleGuess(letter, button) {
 
                 if (!displayWord.includes('_')) {
                     feedback.textContent = 'Congratulations! You guessed the word!';
+                    disableAllLetterButtons();
                     showEndGameButtons();
                 }
             } else {
@@ -123,11 +125,17 @@ function handleGuess(letter, button) {
             updateWordDisplay();
             sameLife();
         }
-    } else {
+    }  if (lives === 0) {
         livesDisplay.textContent = "Lives: " + 0;
         feedback.textContent = 'Unlucky... You lost the game. The word was: ' + selectedWord;
         showEndGameButtons();
+        disableAllLetterButtons();
     }
+}
+function disableAllLetterButtons() {
+    letterButtonsContainer.querySelectorAll('button').forEach(button => {
+        button.disabled = true;
+    });
 }
 
 // Generate letter buttons
