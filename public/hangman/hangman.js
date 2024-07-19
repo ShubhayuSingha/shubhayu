@@ -1,33 +1,38 @@
 const words = [
-    'one','four','seven'
+    'telescope', 'bottle', 'liquid', 'fried rice', 'token', 'turtle', 'weapon',
+    'kitten', 'selfish', 'shellfish', 'catfish', 'lobster', 'helicopter', 'aeroplane',
+    'jaguar', 'operation', 'memory', 'power', 'bonfire', 'skull', 'accent',
+    'aesthetic', 'joker', 'foolish', 'chicken', 'mythology'
 ];
 
 
 let lives = 10;
 let usedWords = []; // Array to store all used words
 let selectedWord = ''; // Store the selected word globally
+let availableWords = [];
 
 // Function to select a random word, excluding words that have been used in the last game
 function selectRandomWord() {
-    let availableWords = words.filter(word => !usedWords.includes(word));
-
+    availableWords = words.filter(word => !usedWords.includes(word));
+    
     if (availableWords.length === 0) {
-        usedWords = [];
-        availableWords = words.slice(); // Reset to include all words
+        showFeedbackMessage('No more words available.');  
+        disableAllLetterButtons();        
+        showHomeButtonOnly();
+        return ''; // Early return if no words are available
     }
-
+    
     let randomIndex = Math.floor(Math.random() * availableWords.length);
-    let selectedWord = availableWords[randomIndex];
-
+    selectedWord = availableWords[randomIndex];
     usedWords.push(selectedWord);
-
     return selectedWord.toUpperCase();
 }
 
 // Initialize the game state
 function initializeGame() {
     // Clear and regenerate letter buttons
-    letterButtonsContainer.innerHTML = '';
+    letterButtonsContainer.innerHTML = ''; 
+    resetLife();   
     generateLetterButtons();
     hideEndGameButtons();
 
@@ -39,26 +44,26 @@ function initializeGame() {
     selectedWord = selectRandomWord();
     guessedLetters = [];
     incorrectLetters = [];
-    lives = 10;
-    displayWord = selectedWord.split('').map(letter => '_');
+    
+    // Initialize displayWord with underscores for letters and spaces for spaces
+    displayWord = selectedWord.split('').map(letter => letter === ' ' ? ' ' : '_');
 
     wordDisplay.textContent = displayWord.join(' ');
     livesDisplay.textContent = "Lives: " + lives;
     feedback.textContent = 'Let us start the game.';
     guessedLettersContainer.textContent = '';
 
-    
-
     // Hide new game buttons container
     newGameContainer.style.display = 'none';
 }
+
 
 // Array to store guessed letters
 let guessedLetters = [];
 let incorrectLetters = [];
 
 // Display dashes for each letter in the word
-let displayWord = selectRandomWord().split('').map(letter => '_');
+let displayWord = selectRandomWord().split('').map(letter => letter === ' ' ? ' ' : '_');
 
 // DOM elements
 const wordDisplay = document.getElementById('word-display');
@@ -74,6 +79,18 @@ const homeButton = document.getElementById('home-button'); // Home button
 wordDisplay.textContent = displayWord.join(' ');
 livesDisplay.textContent = "Lives: " + lives;
 
+function showFeedbackMessage(message) {
+    // Apply blink effect
+    feedback.classList.add('blink');
+
+    // Wait for the animation to complete before updating the text content
+    setTimeout(() => {
+        feedback.textContent = message;
+        // Remove the blink effect class after updating the text
+        feedback.classList.remove('blink');
+    }, 500); // Duration should match the CSS animation duration
+}
+
 function updateWordDisplay() {
     wordDisplay.textContent = displayWord.join(' ');
 }
@@ -86,6 +103,11 @@ function reduceLife() {
 function sameLife() {
     livesDisplay.textContent = "Lives: " + lives;
 }
+
+function resetLife(){
+    lives = 10;
+}
+
 
 // Function to handle a guess
 function handleGuess(letter, button) {
@@ -103,33 +125,35 @@ function handleGuess(letter, button) {
                         displayWord[i] = letter;
                     }
                 }
-                feedback.textContent = 'Keep going!';
+                showFeedbackMessage('Keep going!');
                 updateWordDisplay();
                 sameLife();
 
                 if (!displayWord.includes('_')) {
-                    feedback.textContent = 'Congratulations! You guessed the word!';
+                    showFeedbackMessage('Congratulations! You guessed the word!');
                     disableAllLetterButtons();
                     showEndGameButtons();
                 }
             } else {
-                feedback.textContent = 'Wrong guess.';
+                showFeedbackMessage('Wrong guess.');
                 incorrectLetters.push(letter);
                 updateWordDisplay();
                 reduceLife();
             }
         } else {
-            feedback.textContent = 'Repeating letters.';
+            showFeedbackMessage('Repeating letters.');
             updateWordDisplay();
             sameLife();
         }
-    }  if (lives === 0) {
+    }  
+    if (lives === 0) {
         livesDisplay.textContent = "Lives: " + 0;
-        feedback.textContent = 'Unlucky... You lost the game. The word was: ' + selectedWord;
+        showFeedbackMessage('Unlucky... You lost the game. The word was: ' + selectedWord);
         showEndGameButtons();
         disableAllLetterButtons();
     }
 }
+
 function disableAllLetterButtons() {
     letterButtonsContainer.querySelectorAll('button').forEach(button => {
         button.disabled = true;
@@ -137,22 +161,41 @@ function disableAllLetterButtons() {
 }
 
 // Generate letter buttons
+// Generate letter buttons in rows
 function generateLetterButtons() {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    letters.split('').forEach(letter => {
-        const button = document.createElement('button');
-        button.textContent = letter;
-        button.onclick = () => handleGuess(letter, button);
-        letterButtonsContainer.appendChild(button);
+    const letterRows = [
+        'QWERTYUIOP',
+        'ASDFGHJKL',
+        'ZXCVBNM'
+    ];
+
+    letterRows.forEach(row => {
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('keyboard-row');
+        row.split('').forEach(letter => {
+            const button = document.createElement('button');
+            button.textContent = letter;
+            button.onclick = () => handleGuess(letter, button);
+            button.id = `id-${letter}`; // Set an id for each button
+            rowDiv.appendChild(button);
+        });
+        letterButtonsContainer.appendChild(rowDiv);
     });
 }
+
 
 // Function to show end game buttons
 function showEndGameButtons() {
     newGameContainer.style.display = 'flex';
 }
-function hideEndGameButtons(){
-    newGameContainer.style.display = 'none'
+
+function showHomeButtonOnly() {
+    newGameContainer.style.display = 'flex';
+    newGameButton.style.display = 'none'; // Hide the new game button
+}
+
+function hideEndGameButtons() {
+    newGameContainer.style.display = 'none';
 }
 
 // Event listener for new game button
@@ -161,6 +204,14 @@ newGameButton.addEventListener('click', initializeGame);
 // Event listener for home button
 homeButton.addEventListener('click', () => window.location.href = '/'); // Replace '/' with the URL of your homepage
 
-// Initialize the game
+// Add event listener for key presses
+document.addEventListener('keydown', (event) => {
+    const letter = event.key.toUpperCase();
+    const buttonId = `id-${letter}`;
+    const button = document.getElementById(buttonId);
+    if (button && !button.disabled) {
+        button.click(); // Simulate a click on the button
+    }
+});
 
 initializeGame();
