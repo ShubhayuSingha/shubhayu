@@ -1,8 +1,5 @@
 const words = [
-    'telescope', 'bottle', 'liquid', 'fried-rice', 'token', 'turtle', 'weapon',
-    'kitten', 'selfish', 'shellfish', 'catfish', 'lobster', 'helicopter', 'aeroplane',
-    'jaguar', 'operation', 'memory', 'power', 'bonfire', 'skull', 'accent',
-    'aesthetic', 'joker', 'foolish', 'chicken', 'mythology'
+    'one','four','seven'
 ];
 
 
