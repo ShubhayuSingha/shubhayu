@@ -36,6 +36,8 @@ function initializeGame() {
     generateLetterButtons();
     hideEndGameButtons();
 
+    letterButtonsContainer.style.display = 'block';
+
     // Enable all letter buttons
     letterButtonsContainer.querySelectorAll('button').forEach(button => {
         button.disabled = false; // Ensure all buttons are enabled
@@ -49,8 +51,8 @@ function initializeGame() {
     displayWord = selectedWord.split('').map(letter => letter === ' ' ? ' ' : '_');
 
     wordDisplay.textContent = displayWord.join(' ');
-    livesDisplay.textContent = "Lives: " + lives;
-    feedback.textContent = 'Let us start the game.';
+    livesDisplay.textContent= "Lives: " + lives;
+    showFeedbackMessage('Let us start the game.');
     guessedLettersContainer.textContent = '';
 
     // Hide new game buttons container
@@ -77,7 +79,7 @@ const homeButton = document.getElementById('home-button'); // Home button
 
 // Display initial word state
 wordDisplay.textContent = displayWord.join(' ');
-livesDisplay.textContent = "Lives: " + lives;
+showLivesMessage("Lives: " + lives);
 
 function showFeedbackMessage(message) {
     // Apply blink effect
@@ -88,6 +90,18 @@ function showFeedbackMessage(message) {
         feedback.textContent = message;
         // Remove the blink effect class after updating the text
         feedback.classList.remove('blink');
+    }, 100); // Duration should match the CSS animation duration
+}
+
+function showLivesMessage(message) {
+    // Apply blink effect
+    livesDisplay.classList.add('blink');
+
+    // Wait for the animation to complete before updating the text content
+    setTimeout(() => {
+        livesDisplay.textContent = message;
+        // Remove the blink effect class after updating the text
+        livesDisplay.classList.remove('blink');
     }, 500); // Duration should match the CSS animation duration
 }
 
@@ -97,7 +111,7 @@ function updateWordDisplay() {
 
 function reduceLife() {
     lives--;
-    livesDisplay.textContent = "Lives: " + lives;
+    showLivesMessage("Lives: " + lives);
 }
 
 function sameLife() {
@@ -147,7 +161,7 @@ function handleGuess(letter, button) {
         }
     }  
     if (lives === 0) {
-        livesDisplay.textContent = "Lives: " + 0;
+        showLivesMessage("Lives: " + 0);
         showFeedbackMessage('Unlucky... You lost the game. The word was: ' + selectedWord);
         showEndGameButtons();
         disableAllLetterButtons();
@@ -187,11 +201,13 @@ function generateLetterButtons() {
 // Function to show end game buttons
 function showEndGameButtons() {
     newGameContainer.style.display = 'flex';
+    letterButtonsContainer.style.display = 'none'
 }
 
 function showHomeButtonOnly() {
     newGameContainer.style.display = 'flex';
     newGameButton.style.display = 'none'; // Hide the new game button
+    letterButtonsContainer.style.display = 'none'
 }
 
 function hideEndGameButtons() {
