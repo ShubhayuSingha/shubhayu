@@ -24,8 +24,7 @@ body{
     box-shadow: 0 4px 8px rgba(0,0,0, 0.1);
     text-align: center;
     width: 270px; 
-    margin-top: 10px;
-    margin-bottom: 30px;   
+    margin-top: 10px;      
 }
 
 #lives-display{
@@ -44,7 +43,7 @@ body{
     height: 70px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    margin-top: 30px;  
+    margin-top: 10px;  
 }
 
 #feedback-container{
@@ -58,13 +57,14 @@ body{
     font-size: 30px;
 }
 
-/*#letter-buttons {
-    display: flex;
-    flex-wrap: wrap;
+#letter-buttons {
+    display: grid;   
     gap: 5px;
     margin: 10px 0;
+    bottom: 40px;
+    position: fixed;
 }
-
+/*
 #letter-buttons button {    
     font-size: 18px;
     border: none;
@@ -89,8 +89,8 @@ body{
 
 #new-game-container {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 20px;
+    margin-top: 10px;
 }
 
 #new-game-container button {
@@ -158,20 +158,6 @@ body{
     color: yellow;
 }
 
-#update-container{    
-    display: flex;  
-    justify-content: center; 
-    text-align: center;
-    align-items: center; 
-    background-color: rgb(94, 69, 7);
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 200px; 
-    height: 70px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    margin-top: 30px;  
-}
 
 #feedback-container{
     font-weight: bold;
@@ -283,25 +269,7 @@ body{
 }
 
 
-@media (max-width: 600px) {
 
-    .container{
-        flex-direction: column;
-    }
-    #hangman-container{
-        margin-bottom: 0px;
-        font-size: 16px;
-        padding: 2px;
-        border-radius: 20px;
-        align-self: center;
-    }
-    #update-container{
-        margin-top: 10px;
-        align-self: center; 
-               
-        
-    }
-}
 
 @keyframes blink {
     0% { opacity: 1; }
@@ -359,16 +327,6 @@ body{
         margin-top: 10px;
         align-self: center; 
                
-        
     }
 }
 
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-.blink {
-    animation: blink 0.5s linear;
-}
