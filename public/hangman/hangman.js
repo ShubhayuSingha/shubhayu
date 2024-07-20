@@ -178,6 +178,7 @@ function disableAllLetterButtons() {
     });
 }
 
+
 // Generate letter buttons
 // Generate letter buttons in rows
 function generateLetterButtons() {

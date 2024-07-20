@@ -265,9 +265,7 @@ body{
 }
 
 
-.keyboard-row button:hover {
-    background-color: #a1a5a3; /* Light background on hover */
-}
+
 
 
 
@@ -282,7 +280,11 @@ body{
     animation: blink 0.1s linear;
 }
 
-
+@media (min-width: 600px){
+    .keyboard-row button:hover {
+        background-color: #a1a5a3; /* Light background on hover */
+    }
+};
 
 
 @media (max-width: 600px) {
@@ -301,6 +303,8 @@ body{
         margin-top: 10px;
         align-self: center; 
                
-    }
+    }  
+    
+
 }
 
