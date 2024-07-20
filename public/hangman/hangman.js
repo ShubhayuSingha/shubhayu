@@ -102,7 +102,7 @@ function showLivesMessage(message) {
         livesDisplay.textContent = message;
         // Remove the blink effect class after updating the text
         livesDisplay.classList.remove('blink');
-    }, 500); // Duration should match the CSS animation duration
+    }, 90); // Duration should match the CSS animation duration
 }
 
 function updateWordDisplay() {
