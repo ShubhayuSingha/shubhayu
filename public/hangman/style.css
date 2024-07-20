@@ -235,12 +235,11 @@ body{
     width: 25px; /* Adjust width as needed */
     height: 30px; /* Adjust height as needed */
     margin: 6px;
-    font-size: 25px; /* Adjust font size as needed */
-    background-color: #f0f0f0; /* Background color */
+    font-size: 25px; /* Adjust font size as needed */    
     border: 1px solid #ccc; /* Border color */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s; 
+    transition: background-color 0.3s, transform 0.3s; 
     justify-content: center;
     align-items: center;
     
@@ -248,11 +247,26 @@ body{
 
 .keyboard-row button:active {
     background-color: #ddd; /* Darker background on click */
-    transform: scale(0.95); /* Slightly shrink button on click */
+    transform: scale(0.5); /* Slightly shrink button on click */
 }
 
+.correct-guess {
+    background-color: green;
+    color: yellow;
+    pointer-events: none;
+    
+}
+
+.incorrect-guess {
+    background-color: red;
+    color: yellow;
+    pointer-events: none;
+   
+}
+
+
 .keyboard-row button:hover {
-    background-color: #e0e0e0; /* Light background on hover */
+    background-color: #a1a5a3; /* Light background on hover */
 }
 
 

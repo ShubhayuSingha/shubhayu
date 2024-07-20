@@ -134,6 +134,8 @@ function handleGuess(letter, button) {
             button.disabled = true;
 
             if (selectedWord.includes(letter)) {
+                button.classList.add('correct-guess'); // Add correct-guess class
+
                 for (let i = 0; i < selectedWord.length; i++) {
                     if (selectedWord[i] === letter) {
                         displayWord[i] = letter;
@@ -149,6 +151,8 @@ function handleGuess(letter, button) {
                     showEndGameButtons();
                 }
             } else {
+                button.classList.add('incorrect-guess'); // Add incorrect-guess class
+
                 showFeedbackMessage('Wrong guess.');
                 incorrectLetters.push(letter);
                 updateWordDisplay();
