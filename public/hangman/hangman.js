@@ -235,4 +235,10 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+document.addEventListener('keydown', function(event){
+    if (event.key === 'Enter'){
+        newGameButton.click();
+    }
+});
+
 initializeGame();
