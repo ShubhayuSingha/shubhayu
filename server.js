@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
@@ -10,7 +12,9 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-mongoose.connect('mongodb+srv://shubhayusingha:12345@shubhayu-cluster.55wzbvg.mongodb.net/?retryWrites=true&w=majority&appName=shubhayu-cluster');
+mongooseURI = process.env.MONGODB_URI;
+
+mongoose.connect(mongooseURI);
 
 const namesSchema = {
     name: String,
