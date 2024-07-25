@@ -1,8 +1,5 @@
 const words = [
-    'telescope', 'bottle', 'liquid', 'fried rice', 'token', 'turtle', 'weapon',
-    'kitten', 'selfish', 'shellfish', 'catfish', 'lobster', 'helicopter', 'aeroplane',
-    'jaguar', 'operation', 'memory', 'power', 'bonfire', 'skull', 'accent',
-    'aesthetic', 'joker', 'foolish', 'chicken', 'mythology'
+    'bottle','phone','friends','monkey','sweet','candy','movie','nickname','snake','spider','cockroach','noodles','chicken','circus','watermelon','telephone','triangle','rectangle','storm','green','peacock','hippopotamus'
 ];
 
 
@@ -15,8 +12,7 @@ let availableWords = [];
 function selectRandomWord() {
     availableWords = words.filter(word => !usedWords.includes(word));
     
-    if (availableWords.length === 0) {
-        showFeedbackMessage('No more words available.');  
+    if (availableWords.length === 0) {        
         disableAllLetterButtons();        
         showHomeButtonOnly();
         return ''; // Early return if no words are available
@@ -52,9 +48,19 @@ function initializeGame() {
 
     wordDisplay.textContent = displayWord.join(' ');
     livesDisplay.textContent= "Lives: " + lives;
-    showFeedbackMessage('Let us start the game.');
-    guessedLettersContainer.textContent = '';
 
+
+    if (!selectedWord === ''){
+    showFeedbackMessage('Let us start the game.');
+    } else{
+        showFeedbackMessage('No more words available.');
+    }
+
+
+
+
+    guessedLettersContainer.textContent = '';
+    
     // Hide new game buttons container
     newGameContainer.style.display = 'none';
 }
